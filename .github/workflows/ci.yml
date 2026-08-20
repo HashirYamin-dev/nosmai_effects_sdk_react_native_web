@@ -37,7 +37,7 @@ jobs:
       - name: Build library
         run: yarn prepare
 
-      - name: Expo SDK 57 prebuild smoke test
+      - name: Expo SDK 54 prebuild smoke test
         run: yarn test:expo:plugin
 
       - name: Android Codegen
