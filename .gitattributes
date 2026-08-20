@@ -1,0 +1,4 @@
+*.pbxproj -text
+.yarn/releases/*.cjs -whitespace
+# specific for windows script files
+*.bat text eol=crlf

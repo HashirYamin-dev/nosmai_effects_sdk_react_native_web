@@ -1,0 +1,11 @@
+# Defense in depth: these files must never enter an npm tarball.
+**/*.aar
+**/*.framework/**
+**/*.xcframework/**
+**/*.nosmai
+**/.env*
+**/*license-key*
+**/*license_key*
+example/android/app/libs/
+ios/generated/
+android/generated/

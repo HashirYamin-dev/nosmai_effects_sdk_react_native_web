@@ -1,0 +1,171 @@
+{
+  "name": "@nosmai/react-native-camera-sdk",
+  "version": "0.1.0-expo54-rn081.0",
+  "description": "Official New Architecture React Native bindings for Nosmai Effects on Android and iOS.",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "nosmai-react-native-camera-sdk-source": "./src/index.ts",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./app.plugin": {
+      "types": "./lib/plugin/index.d.ts",
+      "default": "./app.plugin.js"
+    },
+    "./app.plugin.js": {
+      "types": "./lib/plugin/index.d.ts",
+      "default": "./app.plugin.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "app.plugin.js",
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "docs",
+    "CHANGELOG.md",
+    "*.podspec",
+    "!ios/build",
+    "!android/build",
+    "!ios/generated/**",
+    "!android/generated/**",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/*.aar",
+    "!**/*.framework/**",
+    "!**/*.xcframework/**",
+    "!**/*.nosmai",
+    "!**/.env*",
+    "!**/*license-key*",
+    "!**/*license_key*",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "example": "yarn workspace @nosmai/react-native-camera-sdk-example",
+    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
+    "build:plugin": "tsc -p plugin/tsconfig.json",
+    "prepare": "bob build && yarn build:plugin",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "test": "jest --runInBand --no-watchman",
+    "test:expo:plugin": "node scripts/test-expo-plugin.mjs",
+    "test:native:failure": "bash scripts/test-native-recording-failures.sh",
+    "check": "yarn lint && yarn typecheck && yarn test && yarn test:native:failure && yarn prepare && yarn test:expo:plugin",
+    "package:check": "node scripts/check-package.mjs",
+    "prepack": "yarn check && yarn package:check"
+  },
+  "keywords": [
+    "react-native",
+    "camera",
+    "filters",
+    "effects",
+    "ar",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nosmai/nosmai_effects_sdk_react_native.git"
+  },
+  "author": "Nosmai <admin@nosmai.com> (https://nosmai.com)",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/nosmai/nosmai_effects_sdk_react_native/issues"
+  },
+  "homepage": "https://github.com/nosmai/nosmai_effects_sdk_react_native#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^2.1.0",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^9.39.4",
+    "@react-native/babel-preset": "0.81.5",
+    "@react-native/eslint-config": "0.81.5",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.1.0",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "expo": "~54.0.36",
+    "jest": "^29.7.0",
+    "prettier": "^3.8.3",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-builder-bob": "^0.43.0",
+    "turbo": "^2.9.16",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "expo": ">=54.0.0 <55.0.0",
+    "react": ">=19.1.0 <20",
+    "react-native": ">=0.81.5 <0.82.0"
+  },
+  "peerDependenciesMeta": {
+    "expo": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=20.19.4"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "codegenConfig": {
+    "name": "NosmaiCameraSdkSpec",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.nosmai.camerasdk.reactnative"
+    },
+    "ios": {
+      "modulesProvider": {
+        "NosmaiCameraSdk": "NosmaiCameraSdk"
+      },
+      "components": {
+        "NosmaiCameraView": {
+          "className": "NosmaiCameraView"
+        }
+      }
+    }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  }
+}
