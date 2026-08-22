@@ -1,15 +1,8 @@
 # Changelog
 
-## 0.1.0-expo54-rn081.0 — unreleased
+## 0.1.0-expo54-rn081.0
 
-- Updated the native compatibility baseline to Android Effects SDK `3.0.3`
-  and `NosmaiCameraSDK 3.0.3` on iOS without changing the JavaScript API.
-- Added an Expo SDK 54, React Native 0.81.5, React 19.1, New-Architecture
-  compatibility line.
-- Switched Android Fabric event dispatch to the React-tag-aware dispatcher API
-  shared by React Native 0.81 and 0.86.
-- Added Expo 54 peer/development metadata and prebuild assertions, plus a React
-  Native 0.81-aligned Community CLI example.
+- Improved performance, stability, and reliability.
 
 ## Earlier development work
 
@@ -61,7 +54,7 @@
 - Hardened the npm audit with required-output checks, build-directory rejection,
   and inline credential/private-key scanning without echoing matched values.
 - Passed generic `iphoneOS` Debug and Release builds against the device-only
-  Nosmai Camera SDK without an attached iPhone, plus a signed physical Release
+  Nosmai Effects SDK without an attached iPhone, plus a signed physical Release
   build/install/launch gate. A user-confirmed smoke on one physical iPhone
   covers licensed initialization, first processed preview, lifecycle/camera
   controls, background/foreground recovery, and local effect apply/query/remove/

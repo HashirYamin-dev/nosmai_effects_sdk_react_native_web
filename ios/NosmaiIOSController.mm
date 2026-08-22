@@ -3813,7 +3813,7 @@ static UIImage *NosmaiIOSImageByMirroringHorizontally(UIImage *image) {
       } else if ([control isEqualToString:@"skinWhitening"]) {
         [effects applySkinWhitening:(float)value];
       } else {
-        // Pinned Nosmai iOS 3.0.0 still applies a legacy /10 conversion
+        // The Nosmai iOS 3.0.4 compatibility line still applies a legacy /10 conversion
         // internally despite documenting this API as [0,1]. Compensate here
         // so the React Native contract remains a real [0,1] intensity.
         [effects applyTeethWhitening:(float)(value * 10.0)];

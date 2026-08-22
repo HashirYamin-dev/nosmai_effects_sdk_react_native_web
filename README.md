@@ -1,7 +1,7 @@
 # Nosmai Effects SDK for React Native
 
 The official typed React Native New Architecture bindings for Nosmai Effects.
-Install the SDK as `@nosmai/react-native-camera-sdk`. The
+Install the SDK as `@nosmai/react-native-effects-sdk`. The
 native core covers camera preview and lifecycle, rendered photo/video media,
 local and cloud protected packages, beauty/makeup/reshape/eye-color controls,
 color/HSB adjustment, interactive camera games, and manual
@@ -24,7 +24,7 @@ blur/color/image/video backgrounds.
 | Architecture      | New Architecture only (TurboModule + Fabric); legacy architecture is not supported                                                                                            |
 | Android           | Effective RN minimum API 24; native SDK supports API 21; `arm64-v8a` only                                                                                                     |
 | iOS               | iOS 15+; generic Debug/Release builds pass, with signed Release runtime manually verified on one physical iPhone; signed Debug and wider device/version qualification pending |
-| Native Nosmai SDK | Android `3.0.3`; iOS `NosmaiCameraSDK 3.0.3`                                                                                                                                  |
+| Native Nosmai SDK | Android `3.0.4`; iOS `NosmaiCameraSDK 3.0.4`                                                                                                                                  |
 
 This beta line targets Expo SDK 54, React Native 0.81.5, React 19.1, and the
 React Native New Architecture. The current iOS SDK
@@ -56,7 +56,7 @@ export default {
   expo: {
     plugins: [
       [
-        '@nosmai/react-native-camera-sdk',
+        '@nosmai/react-native-effects-sdk',
         {
           androidAarPath:
             process.env.NOSMAI_ANDROID_AAR_PATH ??
@@ -103,14 +103,14 @@ troubleshooting, and EAS notes.
 After the npm beta is published, install the JavaScript package:
 
 ```sh
-yarn add @nosmai/react-native-camera-sdk
+yarn add @nosmai/react-native-effects-sdk
 ```
 
 ### Android native SDK
 
 The npm package does not contain Nosmai's proprietary AAR. Download the
-authorized Android `3.0.3` artifact and `SHA256SUMS` from the
-[Nosmai Effects SDK for Android v3.0.3 release](https://github.com/nosmai/nosmai_effects_sdk_android/releases/tag/v3.0.3),
+authorized Android `3.0.4` artifact and `SHA256SUMS` from the
+[Nosmai Effects SDK for Android v3.0.4 release](https://github.com/nosmai/nosmai_effects_sdk_android/releases/tag/v3.0.4),
 verify its checksum, and place exactly one copy at:
 
 ```text
@@ -160,7 +160,7 @@ Android device-matrix qualification is still pending.
 
 ### iOS native SDK
 
-The podspec depends on `NosmaiCameraSDK ~> 3.0.3`; it does not vendor a
+The podspec depends on `NosmaiCameraSDK ~> 3.0.4`; it does not vendor a
 framework. Install pods from the application:
 
 ```sh
@@ -195,7 +195,7 @@ import { useEffect, useState } from 'react';
 import {
   NosmaiCameraSdk,
   NosmaiCameraView,
-} from '@nosmai/react-native-camera-sdk';
+} from '@nosmai/react-native-effects-sdk';
 
 function Preview({ licenseKey }: { licenseKey: string }) {
   const [mounted, setMounted] = useState(false);
@@ -245,7 +245,7 @@ function Preview({ licenseKey }: { licenseKey: string }) {
 Never commit, log, screenshot, or send a complete license key to analytics.
 Android and iOS applications normally use different app-bound keys.
 
-On SDK 3.0.0, `cleanup()` performs camera/preview/session teardown but
+On the native SDK 3.0.4 compatibility line, `cleanup()` performs camera/preview/session teardown but
 intentionally keeps the native process core initialized. The SDK's full cleanup
 currently leaves its `NosmaiCore` reinitialization guard stale. A later session
 in the same process must therefore use the same app-bound platform key;
@@ -538,6 +538,15 @@ yarn test:native:failure
 The Android and iOS harnesses accept app-bound development keys through a secure
 runtime field and do not preload or persist them. Native SDK binaries and
 protected test effects must never be committed or packed into npm.
+
+## Documentation and support
+
+- [React Native platform guide](https://nosmai.com/docs/effects/platforms/react-native/)
+- [React Native installation](https://nosmai.com/docs/effects/installation/react-native/)
+- [React Native quickstart](https://nosmai.com/docs/effects/quickstart/react-native/)
+- [License key](https://nosmai.com/docs/effects/license-key/)
+- [Troubleshooting](https://nosmai.com/docs/effects/troubleshooting/)
+- [GitHub issues](https://github.com/nosmai/nosmai_effects_sdk_react_native/issues)
 
 ## License
 

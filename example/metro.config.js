@@ -13,7 +13,7 @@ const root = path.resolve(__dirname, '..');
 const config = withMetroConfig(getDefaultConfig(__dirname), {
   root,
   dirname: __dirname,
-  conditions: ['nosmai-react-native-camera-sdk-source'],
+  conditions: ['nosmai-react-native-effects-sdk-source'],
 });
 
 module.exports = config;

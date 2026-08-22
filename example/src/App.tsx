@@ -15,7 +15,7 @@ import {
   NosmaiCameraView,
   NosmaiErrorCode,
   NosmaiSdkError,
-} from '@nosmai/react-native-camera-sdk';
+} from '@nosmai/react-native-effects-sdk';
 import type {
   NosmaiActiveEffects,
   NosmaiCloudFilterPage,
@@ -27,7 +27,7 @@ import type {
   NosmaiRecordingResult,
   NosmaiTorchMode,
   PackageType,
-} from '@nosmai/react-native-camera-sdk';
+} from '@nosmai/react-native-effects-sdk';
 
 const CATALOG_PACKAGE_TYPES: readonly (PackageType | undefined)[] = [
   undefined,
@@ -796,7 +796,7 @@ export default function App() {
         style={styles.controlsScroll}
       >
         <View style={styles.titleRow}>
-          <Text style={styles.title}>Nosmai Camera SDK</Text>
+          <Text style={styles.title}>Nosmai Effects SDK</Text>
           <Text
             accessibilityLabel={`Current controls: ${controlMode}. Show next control group.`}
             accessibilityRole="button"

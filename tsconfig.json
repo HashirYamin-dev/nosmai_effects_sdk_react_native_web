@@ -2,12 +2,12 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "@nosmai/react-native-camera-sdk": ["./src/index"]
+      "@nosmai/react-native-effects-sdk": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "customConditions": [
-      "nosmai-react-native-camera-sdk-source",
+      "nosmai-react-native-effects-sdk-source",
       "react-native-strict-api"
     ],
     "esModuleInterop": true,

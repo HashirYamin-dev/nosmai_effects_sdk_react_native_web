@@ -45,7 +45,7 @@ export default {
   expo: {
     plugins: [
       [
-        '@nosmai/react-native-camera-sdk',
+        '@nosmai/react-native-effects-sdk',
         {
           androidAarPath:
             process.env.NOSMAI_ANDROID_AAR_PATH ??
@@ -83,7 +83,7 @@ Camera, internet, microphone, and legacy API 28 storage declarations already
 merge from the library manifest. Runtime camera and microphone permission
 prompts remain the host application's responsibility.
 
-iOS autolinking uses the package podspec and installs `NosmaiCameraSDK ~> 3.0.3`.
+iOS autolinking uses the package podspec and installs `NosmaiCameraSDK ~> 3.0.4`.
 The config plugin does not modify the Podfile or force `use_frameworks!`.
 
 ## 4. Generate and rebuild native applications

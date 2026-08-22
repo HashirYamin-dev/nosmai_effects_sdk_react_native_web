@@ -40,12 +40,12 @@ only when its listed automated checks and supported-device checks pass.
 The source/build gate plus OES/YUV release smoke and repeated lifecycle stress
 on one physical device are complete, as are the debug and local-effect gates on
 that device. Phase 2 remains open until the wider device-matrix gate passes.
-Android SDK 3.0.0 also needs a public license listener and a restart-safe full
+The Android SDK 3.0.4 compatibility line also needs a public license listener and a restart-safe full
 cleanup before those compatibility adapters can be removed.
 
 ## Phase 3 — iOS core
 
-- [x] Link `NosmaiCameraSDK ~> 3.0.3` through CocoaPods only.
+- [x] Link `NosmaiCameraSDK ~> 3.0.4` through CocoaPods only.
 - [x] Attach `NosmaiCore.camera` preview ownership to the Fabric host.
 - [x] Implement configure/start/stop/pause/resume/switch, foreground/background
       release, stale-view protection, and exact-once Promise settlement.

@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
     "NosmaiReactNativeCameraSdk_privacy" => ["ios/Resources/PrivacyInfo.xcprivacy"]
   }
 
-  s.dependency "NosmaiCameraSDK", "~> 3.0.3"
+  s.dependency "NosmaiCameraSDK", "~> 3.0.4"
   s.frameworks = "AVFoundation", "CoreMedia", "CoreVideo", "Foundation", "OpenGLES", "Photos", "QuartzCore", "UIKit"
 
   s.pod_target_xcconfig = {

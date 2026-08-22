@@ -1,4 +1,4 @@
-# Nosmai React Native Camera SDK example
+# Nosmai Effects SDK for React Native example
 
 This is a development harness for the Android/iOS camera core and Phase 4
 feature-parity surface. It is not a general React Native starter application.
@@ -14,9 +14,9 @@ still required for camera, cloud, visual, light, and frame behavior.
 ## Requirements
 
 - For Android runtime checks, a physical `arm64-v8a` device with developer
-  options enabled and an authorized Nosmai Android SDK 3.0.3 AAR.
+  options enabled and an authorized Nosmai Android SDK 3.0.4 AAR.
 - For iOS builds, macOS/Xcode, CocoaPods, and authorized access to
-  `NosmaiCameraSDK ~> 3.0.3`.
+  `NosmaiCameraSDK ~> 3.0.4`.
 - For iOS runtime checks, a physical arm64 iPhone running iOS 15 or newer.
 - A locally supplied development license key bound to the example application's
   platform identity. Enter it at runtime in the secure field; the example does
@@ -191,7 +191,7 @@ different and app-bound.
   Pixel 7 release device. The default OES debug runtime and an authorized local
   effect apply/query/remove/clear sequence also passed there. A broader device
   matrix remains a Phase 2 gate.
-- The Android 3.0.0 process core is retained across logical cleanup; reuse the
+- The Android 3.0.4 process core is retained across logical cleanup; reuse the
   same key within one process.
 - Cloud catalog/download/remove and the complete visual-control surface are
   implemented; their physical Android/iOS qualification is deferred to the

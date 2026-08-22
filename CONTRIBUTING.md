@@ -29,7 +29,7 @@ Useful commands:
 
 Native builds require an authorized Nosmai SDK artifact. Put the Android AAR at
 `example/android/app/libs/nosmai-release.aar`; iOS resolves
-`NosmaiCameraSDK ~> 3.0.3` through CocoaPods. Never commit either binary, a
+`NosmaiCameraSDK ~> 3.0.4` through CocoaPods. Never commit either binary, a
 license key, protected test effect, model, symbol file, or internal SDK log.
 
 The recording failure-policy runners need no device, key, or proprietary SDK

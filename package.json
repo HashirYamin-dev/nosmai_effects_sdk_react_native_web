@@ -1,12 +1,12 @@
 {
-  "name": "@nosmai/react-native-camera-sdk",
+  "name": "@nosmai/react-native-effects-sdk",
   "version": "0.1.0-expo54-rn081.0",
   "description": "Official New Architecture React Native bindings for Nosmai Effects on Android and iOS.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
     ".": {
-      "nosmai-react-native-camera-sdk-source": "./src/index.ts",
+      "nosmai-react-native-effects-sdk-source": "./src/index.ts",
       "types": "./lib/typescript/src/index.d.ts",
       "default": "./lib/module/index.js"
     },
@@ -50,7 +50,7 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace @nosmai/react-native-camera-sdk-example",
+    "example": "yarn workspace @nosmai/react-native-effects-sdk-example",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "build:plugin": "tsc -p plugin/tsconfig.json",
     "prepare": "bob build && yarn build:plugin",
@@ -78,11 +78,10 @@
   },
   "author": "Nosmai <admin@nosmai.com> (https://nosmai.com)",
   "license": "SEE LICENSE IN LICENSE",
-  "private": true,
   "bugs": {
     "url": "https://github.com/nosmai/nosmai_effects_sdk_react_native/issues"
   },
-  "homepage": "https://github.com/nosmai/nosmai_effects_sdk_react_native#readme",
+  "homepage": "https://nosmai.com/docs/effects/platforms/react-native/",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -96,7 +95,7 @@
     "@types/node": "^22.15.0",
     "@types/react": "^19.1.0",
     "del-cli": "^7.0.0",
-    "eslint": "^9.39.4",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
     "expo": "~54.0.36",

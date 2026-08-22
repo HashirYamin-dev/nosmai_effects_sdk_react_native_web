@@ -13,7 +13,7 @@ signed Debug and wider-device qualification remain open.
 | Surface                                                           | Android                                                                                                   | iOS                                                                                                                      |
 | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | TurboModule and Fabric Codegen                                    | Implemented                                                                                               | Implemented                                                                                                              |
-| SDK initialization and license events                             | Implemented through a 3.0.0 compatibility adapter                                                         | Implemented; manually passed in one signed physical Release smoke                                                        |
+| SDK initialization and license events                             | Implemented through a 3.0.4 compatibility adapter                                                         | Implemented; manually passed in one signed physical Release smoke                                                        |
 | `NosmaiCameraView` processed preview                              | Camera2 OES with YUV fallback; both paths verified on one Pixel 7                                         | Fabric-hosted AVCapture/processed preview; manually passed in one signed physical Release smoke                          |
 | Configure/start/stop/pause/resume/switch                          | Implemented; repeated Pixel 7 stress passed, broader matrix open                                          | Implemented; one signed Release smoke passed, signed Debug/wider stress open                                             |
 | Local protected-package apply/state/scoped clear                  | Implemented; authorized Pixel 7 effect gate passed                                                        | Implemented; physical Release apply/state/remove/full-clear passed on one iPhone, scoped-clear runtime open              |
@@ -76,7 +76,7 @@ camera access when status is undetermined; both platforms reject with
 `default`, `high`, and 720p aliases, plus 480p aliases, for `sessionPreset`;
 other values reject with `E_UNSUPPORTED_CAMERA_PRESET`.
 
-On SDK 3.0.0, logical cleanup intentionally retains the native process core
+On the native SDK 3.0.4 compatibility line, logical cleanup intentionally retains the native process core
 because the upstream full-cleanup path is not restart-safe. A subsequent
 session in the same process may reuse the same app-bound platform key. A
 different key rejects with `E_LICENSE_KEY_MISMATCH`; the bridge never logs or

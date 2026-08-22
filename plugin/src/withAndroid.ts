@@ -27,8 +27,8 @@ export const ANDROID_ARCHITECTURES_PROPERTY = 'reactNativeArchitectures';
 export const ANDROID_ARCHITECTURES_VALUE = 'arm64-v8a';
 
 const GRADLE_BLOCK_BEGIN =
-  '// @generated begin @nosmai/react-native-camera-sdk - expo prebuild (DO NOT MODIFY)';
-const GRADLE_BLOCK_END = '// @generated end @nosmai/react-native-camera-sdk';
+  '// @generated begin @nosmai/react-native-effects-sdk - expo prebuild (DO NOT MODIFY)';
+const GRADLE_BLOCK_END = '// @generated end @nosmai/react-native-effects-sdk';
 const MANUAL_AAR_DEPENDENCY =
   /implementation\s*(?:\(\s*)?files\s*\(\s*["']libs\/nosmai-release\.aar["']\s*\)\s*\)?/;
 

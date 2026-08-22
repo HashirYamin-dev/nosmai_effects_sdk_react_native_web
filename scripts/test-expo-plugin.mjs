@@ -94,7 +94,7 @@ try {
         version: '1.0.0',
         private: true,
         dependencies: {
-          '@nosmai/react-native-camera-sdk': packageManifest.version,
+          '@nosmai/react-native-effects-sdk': packageManifest.version,
           'expo': '~54.0.36',
           'react': '19.1.0',
           'react-native': '0.81.5',
@@ -113,7 +113,7 @@ try {
     android: { package: 'com.nosmai.expopluginfixture' },
     ios: { bundleIdentifier: 'com.nosmai.expopluginfixture' },
     plugins: [[
-      '@nosmai/react-native-camera-sdk',
+      '@nosmai/react-native-effects-sdk',
       {
         androidAarPath: './vendor/nosmai-release.aar',
         androidAarSha256: '${fakeAarHash}',
@@ -131,7 +131,7 @@ try {
   linkPackage('expo', packageDirectory('expo'));
   linkPackage('react', packageDirectory('react'));
   linkPackage('react-native', packageDirectory('react-native'));
-  linkPackage('@nosmai/react-native-camera-sdk', packageRoot);
+  linkPackage('@nosmai/react-native-effects-sdk', packageRoot);
 
   runPrebuild('android');
   runPrebuild('android');

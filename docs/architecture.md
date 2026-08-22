@@ -26,7 +26,7 @@ results stay native.
 - Unmount stops and detaches only resources owned by that view. It must not let
   a stale view tear down a newer preview.
 - `cleanup()` is final logical session teardown. Reinitialization is required
-  before reuse. Android SDK 3.0.0 keeps its process core alive because its full
+  before reuse. Android SDK 3.0.4 keeps its process core alive because its full
   cleanup does not reset `NosmaiCore`; see the documented compatibility note.
 - Both platforms require an explicit recording stop before caller-driven camera
   teardown. Lifecycle interruption performs best-effort recording finalization,
@@ -93,7 +93,7 @@ semantics are not part of the new contract.
 
 - Android: the consuming app supplies one verified `nosmai-release.aar`; the
   library uses it as compile-only and never packages it.
-- iOS: the plugin pod depends on `NosmaiCameraSDK ~> 3.0.3`; no copied framework.
+- iOS: the plugin pod depends on `NosmaiCameraSDK ~> 3.0.4`; no copied framework.
 - iOS generic `iphoneOS` Debug and Release builds target `generic/platform=iOS`
   and can be verified without an attached iPhone. Licensed rendering, lifecycle,
   license-event, and effect behavior has been manually smoke-tested with a

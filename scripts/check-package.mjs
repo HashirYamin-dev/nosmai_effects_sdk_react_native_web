@@ -58,7 +58,7 @@ if (files.length === 0) {
 }
 
 const expoPluginPath =
-  require.resolve('@nosmai/react-native-camera-sdk/app.plugin');
+  require.resolve('@nosmai/react-native-effects-sdk/app.plugin');
 const expoPlugin = require(expoPluginPath);
 if (typeof expoPlugin !== 'function') {
   throw new Error('Expo app.plugin export must resolve to a config function.');
