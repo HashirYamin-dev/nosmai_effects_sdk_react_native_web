@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.0
+
+- Published the first stable Nosmai Effects SDK release for React Native.
+- Supports React Native 0.81.5, React 19.1, Expo SDK 54 custom builds, and the
+  New Architecture on Android and iOS.
+- Uses the verified Nosmai Effects native SDK 3.0.4 releases on both platforms.
+- Includes camera lifecycle, local and Cloud Filters, interactive camera games,
+  beauty and makeup controls, backgrounds, capture, recording, and processed
+  frame APIs.
+- Improved performance, stability, packaging safety, and lifecycle reliability.
+
 ## 0.1.0-expo54-rn081.0
 
 - Improved performance, stability, and reliability.

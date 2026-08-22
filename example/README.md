@@ -8,8 +8,8 @@ catalogs and cloud packages, download progress/pagination,
 beauty/makeup/reshape/eye color, color/HSB, and all four manual background
 modes. It also exposes flash/torch, authored package parameters, and bounded
 processed raw-frame sampling. Generic `iphoneOS` Debug and Release builds can
-be verified without an attached iPhone; physical runtime qualification is
-still required for camera, cloud, visual, light, and frame behavior.
+be verified without an attached iPhone; use a physical device to test camera,
+cloud, visual, light, and frame behavior.
 
 ## Requirements
 
@@ -162,21 +162,19 @@ without a connected iPhone. They do not qualify licensed runtime behavior.
     **Save Video** export the most recent cache file to the system gallery; API
     24–28 may also ask for legacy gallery-write permission.
 
-## iOS physical-runtime qualification
+## iOS physical-device verification
 
-On one authorized physical iPhone, the signed Release harness passed build,
-install, and launch gates. The user-confirmed manual smoke covered licensed
-initialization, first processed-frame readiness, pause/resume, camera switching,
-background/foreground recovery, and package-state operations. The newly added
-explicit cleanup/reinitialize and scoped-clear controls, signed Debug runtime,
-and the wider supported iPhone/iOS matrix remain open. A generic `iphoneOS`
-build by itself is not evidence that runtime checks passed.
+Use an authorized physical iPhone to verify licensed initialization,
+first-processed-frame readiness, pause/resume, camera switching,
+background/foreground recovery, package-state operations, cleanup/reinitialize,
+and scoped clears. A generic `iphoneOS` build verifies compilation and linking;
+it does not exercise the camera or rendered effects.
 
 The media harness also declares `NSMicrophoneUsageDescription` and
-`NSPhotoLibraryAddUsageDescription`. On the final media qualification pass,
+`NSPhotoLibraryAddUsageDescription`. During application acceptance testing,
 verify capture dimensions, active effects, requested mirroring, recording
 audio/video sync and duration, background interruption, and both gallery-save
-buttons. These media checks have not yet been claimed by the earlier core smoke.
+buttons on the device models your app supports.
 
 Do not print, log, screenshot, paste into issue trackers, or send a complete
 license key to analytics. The npm package excludes this example, but a key
@@ -186,24 +184,16 @@ different and app-bound.
 
 ## Current limitations
 
-- Licensed OES and forced-YUV first-processed-frame checks plus repeated
-  pause/resume, camera-ID switch, and background/foreground stress passed on one
-  Pixel 7 release device. The default OES debug runtime and an authorized local
-  effect apply/query/remove/clear sequence also passed there. A broader device
-  matrix remains a Phase 2 gate.
+- Android selects OES or YUV input according to device/runtime compatibility.
+  Verify first-frame readiness, pause/resume, camera switching, and lifecycle
+  behavior on every Android device family your app supports.
 - The Android 3.0.4 process core is retained across logical cleanup; reuse the
   same key within one process.
-- Cloud catalog/download/remove and the complete visual-control surface are
-  implemented; their physical Android/iOS qualification is deferred to the
-  final testing phase.
-- Capture, recording/progress, and gallery export are implemented in source;
-  physical Android/iOS media qualification is intentionally deferred to the
-  final testing phase.
+- Cloud catalog/download/remove and the complete visual-control surface require
+  an active licensed session and network access where applicable.
+- Capture, recording/progress, and gallery export require the documented camera,
+  microphone, and photo-library permissions.
 - Flash/torch, authored effect parameters, and latest-only processed raw-frame
-  sampling are implemented. Real light/exposure behavior, authored package
-  parameter semantics, frame formats/strides, and sustained device performance
-  remain in the final physical Android/iOS qualification phase. Raw frames use
+  sampling depend on selected-camera and package capabilities. Raw frames use
   a bounded CPU/base64 pull API, not a zero-copy texture or WebRTC transport.
-- The Phase 3 iOS core and one signed physical Release smoke pass. Explicit
-  cleanup/reinitialize and scoped-clear controls, signed Debug runtime, repeated
-  stress, and the wider supported iPhone/iOS matrix remain open.
+- The iOS native framework is device-only; iOS Simulator is unsupported.

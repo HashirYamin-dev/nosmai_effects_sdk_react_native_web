@@ -96,9 +96,8 @@ semantics are not part of the new contract.
 - iOS: the plugin pod depends on `NosmaiCameraSDK ~> 3.0.4`; no copied framework.
 - iOS generic `iphoneOS` Debug and Release builds target `generic/platform=iOS`
   and can be verified without an attached iPhone. Licensed rendering, lifecycle,
-  license-event, and effect behavior has been manually smoke-tested with a
-  signed Release build on one physical arm64 iPhone; signed Debug and wider
-  device/version qualification still require physical devices.
+  license-event, and effect behavior must be verified on physical arm64 devices
+  selected for the consuming application's support matrix.
 - The iOS privacy manifest declares `SystemBootTime` reason `35F9.1` because the
   controller uses `NSProcessInfo.processInfo.systemUptime` for monotonic
   deadlines and debounce timing.

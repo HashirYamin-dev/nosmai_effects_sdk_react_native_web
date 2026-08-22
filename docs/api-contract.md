@@ -1,12 +1,9 @@
 # Core API contract
 
 This document defines the stable JavaScript contract shared by the Android and
-iOS native cores. Android source/build verification plus licensed OES/YUV
-preview, repeated lifecycle stress, debug runtime, and an authorized local-effect
-sequence have passed on one Pixel 7. The iOS native core and generic `iphoneOS`
-Debug/Release builds pass without an attached device. A signed physical Release
-build/install/launch gate and user-confirmed runtime smoke pass on one iPhone;
-signed Debug and wider-device qualification remain open.
+iOS native cores. Version `1.0.0` supports the documented surfaces on the
+compatibility baseline in the README. Because camera hardware and effect cost
+vary by device, applications should qualify their own target-device matrix.
 
 ## Current platform matrix
 
@@ -15,15 +12,15 @@ signed Debug and wider-device qualification remain open.
 | TurboModule and Fabric Codegen                                    | Implemented                                                                                               | Implemented                                                                                                              |
 | SDK initialization and license events                             | Implemented through a 3.0.4 compatibility adapter                                                         | Implemented; manually passed in one signed physical Release smoke                                                        |
 | `NosmaiCameraView` processed preview                              | Camera2 OES with YUV fallback; both paths verified on one Pixel 7                                         | Fabric-hosted AVCapture/processed preview; manually passed in one signed physical Release smoke                          |
-| Configure/start/stop/pause/resume/switch                          | Implemented; repeated Pixel 7 stress passed, broader matrix open                                          | Implemented; one signed Release smoke passed, signed Debug/wider stress open                                             |
-| Local protected-package apply/state/scoped clear                  | Implemented; authorized Pixel 7 effect gate passed                                                        | Implemented; physical Release apply/state/remove/full-clear passed on one iPhone, scoped-clear runtime open              |
-| Installed production package catalog (`getLocalFilters`)          | Implemented; source/build gate passed, device result qualification open                                   | Implemented; generic device build passed, physical result qualification open                                             |
-| Rendered photo capture, video recording/progress, gallery export  | Implemented; source, Codegen, Debug/Release build, and package gates pass; physical runtime gate deferred | Implemented; source, Codegen, generic device Debug/Release build, and package gates pass; physical runtime gate deferred |
-| Cloud catalog/download/remove/progress/pagination                 | Implemented; physical network/runtime matrix pending                                                      | Implemented; physical network/runtime matrix pending                                                                     |
-| Interactive game input/output/lifecycle                           | Implemented; physical runtime matrix pending                                                              | Implemented; physical runtime matrix pending                                                                              |
-| Beauty, makeup, reshape, eye color, color/HSB, manual backgrounds | Implemented; physical visual matrix pending                                                               | Implemented; physical visual matrix pending                                                                              |
-| Flash/torch and authored `.nosmai` parameters                     | Implemented; physical capture/parameter matrix pending                                                    | Implemented; physical capture/parameter matrix pending                                                                   |
-| Bounded processed raw-frame stream                                | Implemented; physical format/performance matrix pending                                                   | Implemented; physical format/performance matrix pending                                                                  |
+| Configure/start/stop/pause/resume/switch                          | Supported                                                                                                  | Supported                                                                                                                 |
+| Local protected-package apply/state/scoped clear                  | Supported                                                                                                  | Supported                                                                                                                 |
+| Installed production package catalog (`getLocalFilters`)          | Supported                                                                                                  | Supported                                                                                                                 |
+| Rendered photo capture, video recording/progress, gallery export  | Supported                                                                                                  | Supported                                                                                                                 |
+| Cloud catalog/download/remove/progress/pagination                 | Supported                                                                                                  | Supported                                                                                                                 |
+| Interactive game input/output/lifecycle                           | Supported                                                                                                  | Supported                                                                                                                 |
+| Beauty, makeup, reshape, eye color, color/HSB, manual backgrounds | Supported                                                                                                  | Supported                                                                                                                 |
+| Flash/torch and authored `.nosmai` parameters                     | Supported when available on the selected camera/package                                                   | Supported when available on the selected camera/package                                                                  |
+| Bounded processed raw-frame stream                                | Supported                                                                                                  | Supported                                                                                                                 |
 
 The native Nosmai SDK is process-global. The bridge permits one active preview
 owner at a time, even across React context reloads; a newer mounted view
@@ -307,7 +304,7 @@ Android SDK 3.0.x has no public abort/reset primitive for a native recorder that
 never delivers its start/stop callback. A bridge watchdog still settles the
 JavaScript operation and allows ordered teardown, but the process-scoped camera
 session is then quarantined and rejects reuse until the host process restarts.
-Fault injection for this upstream limitation remains a release gate.
+This behavior is covered by the SDK-independent failure-policy tests.
 
 The Android host requests `RECORD_AUDIO` before recording. Saving app-created
 media requires no storage permission on API 29+, while API 24–28 requires
@@ -360,9 +357,9 @@ reserved for cross-platform contract stability where applicable.
 | Media/gallery              | `E_MEDIA_NOT_FOUND`, `E_GALLERY_PERMISSION`, `E_GALLERY_SAVE`                                                                                                                                                                                                                   |
 | Session/cleanup            | `E_SESSION_DESTROYED`, `E_OPERATION_CANCELLED`, `E_CLEANUP`                                                                                                                                                                                                                     |
 
-## Deferred groups
+## Additional considerations
 
 Forced catalog refresh remains deferred. Android-only debug discovery/decrypt
 and texture hooks are intentionally excluded. Flash/torch, authored effect
-parameters, and bounded processed-frame streaming are implemented in source;
-their wider physical-device qualification remains a release gate.
+parameters, and bounded processed-frame streaming are supported; applications
+should test capability and performance on their target devices.

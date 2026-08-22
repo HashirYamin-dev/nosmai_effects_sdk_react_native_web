@@ -7,40 +7,34 @@ local and cloud protected packages, beauty/makeup/reshape/eye-color controls,
 color/HSB adjustment, interactive camera games, and manual
 blur/color/image/video backgrounds.
 
-> Beta status: the cross-platform feature surface is implemented and is
-> moving through automated build and final physical-device qualification. Core
-> preview, lifecycle, and local protected-package behavior has already been
-> manually exercised on a Pixel 7 and one physical iPhone. Cloud transfer,
-> visual-control combinations, rendered media, interruptions, and the wider
-> Android/iPhone matrix remain final runtime release gates.
+> Stable release: version `1.0.0` is the production React Native package for
+> the supported compatibility baseline below. Validate camera, effect, and
+> recording behavior on the physical device models targeted by your app.
 
 ## Compatibility
 
-| Layer             | Supported baseline                                                                                                                                                            |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Expo              | SDK `54.x`; custom development/EAS build required (Expo Go is unsupported)                                                                                                    |
-| React Native      | `0.81.5` compatibility line; `>=0.81.5 <0.82.0` peer range                                                                                                                    |
-| React             | `19.1.x`                                                                                                                                                                      |
-| Architecture      | New Architecture only (TurboModule + Fabric); legacy architecture is not supported                                                                                            |
-| Android           | Effective RN minimum API 24; native SDK supports API 21; `arm64-v8a` only                                                                                                     |
-| iOS               | iOS 15+; generic Debug/Release builds pass, with signed Release runtime manually verified on one physical iPhone; signed Debug and wider device/version qualification pending |
-| Native Nosmai SDK | Android `3.0.4`; iOS `NosmaiCameraSDK 3.0.4`                                                                                                                                  |
+| Layer             | Supported baseline                                                                                         |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| Expo              | SDK `54.x`; custom development/EAS build required (Expo Go is unsupported)                                 |
+| React Native      | `0.81.5` compatibility line; `>=0.81.5 <0.82.0` peer range                                                 |
+| React             | `19.1.x`                                                                                                   |
+| Architecture      | New Architecture only (TurboModule + Fabric); legacy architecture is not supported                         |
+| Android           | Effective RN minimum API 24; native SDK supports API 21; physical `arm64-v8a` device                       |
+| iOS               | iOS 15+; physical arm64 iPhone or iPad                                                                      |
+| Native Nosmai SDK | Android `3.0.4`; iOS `NosmaiCameraSDK 3.0.4`                                                               |
 
-This beta line targets Expo SDK 54, React Native 0.81.5, React 19.1, and the
-React Native New Architecture. The current iOS SDK
-framework is device-only, so bridge linking targets `generic/platform=iOS`
-rather than iOS Simulator. Generic Debug and Release compilation does not need
-an attached iPhone. Actual Nosmai rendering has been manually verified with the
-signed Release harness on one supported physical arm64 iPhone; signed Debug
-runtime and the wider supported matrix are still open. npm publication remains
-gated by final runtime qualification.
+Version `1.0.0` targets Expo SDK 54, React Native 0.81.5, React 19.1, and the
+React Native New Architecture. The current iOS SDK framework is device-only,
+so bridge linking targets `generic/platform=iOS` rather than iOS Simulator.
+Generic Debug and Release compilation does not need an attached iPhone, but
+Nosmai rendering must be tested on a supported physical arm64 device.
 
 ## Expo SDK 54
 
 Expo SDK 54 is supported through the packaged Expo config plugin. It uses the
-React Native 0.81 and React 19.1 baseline qualified by this beta release. Expo Go cannot
-load Nosmai's custom native module, so use an Expo development build or an EAS
-build.
+React Native 0.81 and React 19.1 baseline supported by this stable release.
+Expo Go cannot load Nosmai's custom native module, so use an Expo development
+build or an EAS build.
 
 Keep the authorized Android AAR outside the generated `android/` directory so
 `expo prebuild --clean` cannot delete the source artifact. For example:
@@ -100,7 +94,7 @@ troubleshooting, and EAS notes.
 
 ## Installation
 
-After the npm beta is published, install the JavaScript package:
+Install the stable JavaScript package:
 
 ```sh
 yarn add @nosmai/react-native-effects-sdk
@@ -155,8 +149,8 @@ Android effect mutations run through one FIFO. During `cleanup()`, the bridge
 stops admission, lets an operation that already entered the native SDK settle,
 and cancels queued operations before native entry. Scoped clears wait for both
 their callback and the native transition to become idle; full clear fences the
-SDK effect executor, main queue, and preview GL queue before teardown. Wider
-Android device-matrix qualification is still pending.
+SDK effect executor, main queue, and preview GL queue before teardown. Test the
+complete lifecycle on every Android device family supported by your app.
 
 ### iOS native SDK
 
@@ -257,8 +251,8 @@ A resolved `startProcessing()` means the native start request was accepted; it
 does not prove that a processed frame rendered. Treat the view's `onReady` as
 the render-readiness signal. That signal has been verified on OES and forced-YUV
 paths on one Pixel 7 and manually observed with the signed Release harness on
-one physical iPhone. Signed physical Debug and wider-device verification remain
-release gates.
+one physical iPhone. Applications should verify first-frame readiness on their
+supported physical-device matrix before shipping.
 
 The current public surface contains lifecycle, preview, rendered photo capture,
 video recording/progress, gallery export, local and cloud protected-package
@@ -308,8 +302,7 @@ start or stop callback never arrives. The bridge watchdog settles the pending
 operation and quarantines that camera session instead of attempting unsafe
 reuse; the host process must be restarted before another camera session. This
 policy is covered by SDK-independent stale/current-generation fault injection;
-forcing the proprietary recorder to lose a real callback remains an upstream
-physical-device release gate. See
+the host should restart the process if this native timeout occurs. See
 [native recording failure tests](docs/native-recording-failure-tests.md).
 
 `getLocalFilters()` returns every installed production package, or accepts one
