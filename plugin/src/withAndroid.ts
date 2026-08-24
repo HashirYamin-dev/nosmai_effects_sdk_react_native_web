@@ -24,7 +24,7 @@ import type { NosmaiExpoPluginProps } from './types';
 export const DEFAULT_ANDROID_AAR_PATH = 'vendor/nosmai-release.aar';
 export const ANDROID_AAR_NAME = 'nosmai-release.aar';
 export const ANDROID_ARCHITECTURES_PROPERTY = 'reactNativeArchitectures';
-export const ANDROID_ARCHITECTURES_VALUE = 'arm64-v8a';
+export const ANDROID_ARCHITECTURES_VALUE = 'armeabi-v7a,arm64-v8a';
 
 const GRADLE_BLOCK_BEGIN =
   '// @generated begin @nosmai/react-native-effects-sdk - expo prebuild (DO NOT MODIFY)';

@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added Android `armeabi-v7a` support alongside the existing `arm64-v8a`
+  configuration for native, Expo, and example builds.
+
 ## 1.0.0
 
 - Published the first stable Nosmai Effects SDK release for React Native.

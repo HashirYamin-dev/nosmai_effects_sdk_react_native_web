@@ -38,7 +38,7 @@ describe('Nosmai Expo Android configuration', () => {
     expect(addNosmaiAarDependency(manual, 'groovy')).toBe(manual);
   });
 
-  it('sets one authoritative ARM64 property', () => {
+  it('sets one authoritative dual-ABI property', () => {
     const properties = upsertGradleProperty(
       [
         { type: 'comment', value: 'Architectures' },

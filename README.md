@@ -19,7 +19,7 @@ blur/color/image/video backgrounds.
 | React Native      | `0.81.5` compatibility line; `>=0.81.5 <0.82.0` peer range                                                 |
 | React             | `19.1.x`                                                                                                   |
 | Architecture      | New Architecture only (TurboModule + Fabric); legacy architecture is not supported                         |
-| Android           | Effective RN minimum API 24; native SDK supports API 21; physical `arm64-v8a` device                       |
+| Android           | Effective RN minimum API 24; native SDK supports API 21; physical `arm64-v8a` or `armeabi-v7a` device      |
 | iOS               | iOS 15+; physical arm64 iPhone or iPad                                                                      |
 | Native Nosmai SDK | Android `3.0.4`; iOS `NosmaiCameraSDK 3.0.4`                                                               |
 
@@ -70,8 +70,8 @@ export default {
 ```
 
 The plugin copies the AAR to the generated Android app, adds its runtime Gradle
-dependency, restricts Android builds to `arm64-v8a`, keeps New Architecture
-enabled, and adds the three required iOS usage descriptions. Android manifest
+dependency, restricts Android builds to `arm64-v8a` and `armeabi-v7a`, keeps
+New Architecture enabled, and adds the three required iOS usage descriptions. Android manifest
 permissions already merge from this library; the host app must still request
 camera and microphone permissions at runtime.
 
@@ -117,7 +117,7 @@ Add it to the consuming app, not to this library:
 android {
   defaultConfig {
     ndk {
-      abiFilters "arm64-v8a"
+      abiFilters "arm64-v8a", "armeabi-v7a"
     }
   }
 }

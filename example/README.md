@@ -13,8 +13,9 @@ cloud, visual, light, and frame behavior.
 
 ## Requirements
 
-- For Android runtime checks, a physical `arm64-v8a` device with developer
-  options enabled and an authorized Nosmai Android SDK 3.0.4 AAR.
+- For Android runtime checks, a physical `arm64-v8a` or `armeabi-v7a` device
+  with developer options enabled and an authorized dual-ABI Nosmai Android SDK
+  3.0.4 AAR.
 - For iOS builds, macOS/Xcode, CocoaPods, and authorized access to
   `NosmaiCameraSDK ~> 3.0.4`.
 - For iOS runtime checks, a physical arm64 iPhone running iOS 15 or newer.
@@ -62,7 +63,7 @@ signature and is not for distribution):
 
 ```sh
 cd example/android
-./gradlew app:assembleRelease -PreactNativeArchitectures=arm64-v8a
+./gradlew app:assembleRelease -PreactNativeArchitectures=armeabi-v7a,arm64-v8a
 ```
 
 To additionally qualify the library's consumer rules through R8, append
@@ -75,7 +76,7 @@ development-only manifest switch enabled:
 ```sh
 cd example/android
 ./gradlew app:assembleRelease \
-  -PreactNativeArchitectures=arm64-v8a \
+  -PreactNativeArchitectures=armeabi-v7a,arm64-v8a \
   -PnosmaiForceYuv=true
 ```
 

@@ -65,7 +65,7 @@ export default {
 ```
 
 If the app also uses `expo-build-properties`, list the Nosmai plugin after it so
-the required ARM64 architecture value is the final generated value.
+the required Android ABI values are the final generated value.
 
 All permission-text options are optional. An explicit option replaces the
 matching iOS value; otherwise an existing host value is preserved; otherwise a
@@ -76,7 +76,8 @@ come from library autolinking:
 
 - Copies and optionally verifies the authorized AAR.
 - Adds the app-level AAR runtime dependency exactly once.
-- Sets `reactNativeArchitectures=arm64-v8a` because the native SDK is ARM64-only.
+- Sets `reactNativeArchitectures=armeabi-v7a,arm64-v8a` for the native SDK's
+  supported 32-bit and 64-bit ARM ABIs.
 - Keeps `newArchEnabled=true`, which is required by the TurboModule/Fabric API.
 
 Camera, internet, microphone, and legacy API 28 storage declarations already
@@ -104,7 +105,8 @@ and commit the resulting native configuration.
 
 ## Platform limits
 
-- Android requires an ARM64 physical device; x86/x64 emulators are unsupported.
+- Android requires a physical `arm64-v8a` or `armeabi-v7a` device; x86/x64
+  emulators are unsupported.
 - The current iOS native framework is device-only; use a physical arm64 iPhone.
 - License keys remain separate app-bound runtime values. The Expo plugin does
   not accept or persist them.

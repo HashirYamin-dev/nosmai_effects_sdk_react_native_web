@@ -160,12 +160,15 @@ try {
     throw new Error('Expo plugin must add exactly one Android AAR dependency.');
   }
   if (
-    countMatches(gradleProperties, /^reactNativeArchitectures=arm64-v8a$/gm) !==
+    countMatches(
+      gradleProperties,
+      /^reactNativeArchitectures=armeabi-v7a,arm64-v8a$/gm
+    ) !==
       1 ||
     countMatches(gradleProperties, /^newArchEnabled=true$/gm) !== 1
   ) {
     throw new Error(
-      'Expo plugin must configure exactly one ARM64/New-Architecture property.'
+      'Expo plugin must configure exactly one ARMv7/ARM64 New-Architecture property.'
     );
   }
 
