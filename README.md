@@ -541,33 +541,20 @@ protected test effects must never be committed or packed into npm.
 - [Troubleshooting](https://nosmai.com/docs/effects/troubleshooting/)
 - [GitHub issues](https://github.com/nosmai/nosmai_effects_sdk_react_native/issues)
 
+
 ## License
 
-Commercial/proprietary. See [LICENSE](LICENSE). For authorization, contact
-<<<<<<< HEAD
-`admin@nosmai.com`.
-
----
-=======
-admin@nosmai.com`.
->>>>>>> 22d96c9 (Update README with Web support guide)
+Commercial/proprietary. See [LICENSE](https://github.com/HashirYamin-dev/nosmai_effects_sdk_react_native_web/blob/main/LICENSE). For authorization, contact `admin@nosmai.com`.
 
 ## Web support
 
 This repository also includes React Native Web support powered by `@nosmai/web-sdk`.
 
-<<<<<<< HEAD
 The existing Android and iOS implementations remain unchanged. On Web, the package automatically uses the Web-specific implementation:
-=======
-The existing Android and iOS implementations remain unchanged.
->>>>>>> 22d96c9 (Update README with Web support guide)
 
-```text
+```
 Android -> Native Nosmai Android SDK
 iOS     -> Native Nosmai iOS SDK
-<<<<<<< HEAD
-Web     -> @nosmai/web-sdk
-=======
 Web     -> @nosmai/web-sdk
 ```
 
@@ -575,25 +562,25 @@ Web     -> @nosmai/web-sdk
 
 1. Install the SDK:
 
-```bash
+```
 yarn add @nosmai/react-native-effects-sdk
 ```
 
 2. If your app does not already use React Native Web:
 
-```bash
+```
 yarn add react-native-web react-dom
 ```
 
 3. Copy the required Web assets:
 
-```bash
+```
 npx nosmai-copy-web-assets public
 ```
 
 This copies:
 
-```text
+```
 public/
   nosmai_bridge.js
   nosmai/
@@ -604,7 +591,7 @@ public/
 
 4. Import the React Native API:
 
-```tsx
+```
 import {
   NosmaiCameraSdk,
   NosmaiCameraView
@@ -613,7 +600,7 @@ import {
 
 5. Initialize and start the camera:
 
-```ts
+```
 await NosmaiCameraSdk.initialize(NOSMAI_LICENSE_KEY)
 
 await NosmaiCameraSdk.configureCamera({
@@ -625,7 +612,7 @@ await NosmaiCameraSdk.startProcessing()
 
 6. Render the preview:
 
-```tsx
+```
 <NosmaiCameraView
   style={{ flex: 1 }}
   cameraPosition="front"
@@ -635,7 +622,7 @@ await NosmaiCameraSdk.startProcessing()
 
 7. Check feature availability:
 
-```ts
+```
 const cloudEnabled =
   await NosmaiCameraSdk.isCloudFilterEnabled()
 
@@ -645,7 +632,7 @@ const beautyEnabled =
 
 8. Apply Beauty:
 
-```ts
+```
 if (beautyEnabled) {
   await NosmaiCameraSdk.setSkinSmoothing(0.5)
 }
@@ -653,7 +640,7 @@ if (beautyEnabled) {
 
 9. Load and apply a Cloud Effect:
 
-```ts
+```
 if (cloudEnabled) {
   const page = await NosmaiCameraSdk.getCloudFilters({
     page: 1,
@@ -673,7 +660,7 @@ if (cloudEnabled) {
 
 10. Clean up when leaving the camera screen:
 
-```ts
+```
 await NosmaiCameraSdk.cleanup()
 ```
 
@@ -684,4 +671,3 @@ await NosmaiCameraSdk.cleanup()
 - Beauty and Cloud Filters depend on the active Nosmai licence and authorized Web origin.
 - Different ports are different browser origins, for example `localhost:4173` and `localhost:4174`.
 - Do not import `@nosmai/web-sdk` directly in the application. Use `@nosmai/react-native-effects-sdk`.
->>>>>>> 22d96c9 (Update README with Web support guide)
