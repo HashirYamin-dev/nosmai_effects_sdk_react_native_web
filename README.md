@@ -545,3 +545,16 @@ protected test effects must never be committed or packed into npm.
 
 Commercial/proprietary. See [LICENSE](LICENSE). For authorization, contact
 `admin@nosmai.com`.
+
+---
+
+## Web support
+
+This repository also includes React Native Web support powered by `@nosmai/web-sdk`.
+
+The existing Android and iOS implementations remain unchanged. On Web, the package automatically uses the Web-specific implementation:
+
+```text
+Android -> Native Nosmai Android SDK
+iOS     -> Native Nosmai iOS SDK
+Web     -> @nosmai/web-sdk
