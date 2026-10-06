@@ -1,12 +1,13 @@
 {
   "name": "@nosmai/react-native-effects-sdk",
   "version": "1.0.0",
-  "description": "Official New Architecture React Native bindings for Nosmai Effects on Android and iOS.",
+  "description": "Official New Architecture React Native bindings for Nosmai Effects on Android, iOS, and Web.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
     ".": {
       "nosmai-react-native-effects-sdk-source": "./src/index.ts",
+      "browser": "./lib/module/index.web.js",
       "types": "./lib/typescript/src/index.d.ts",
       "default": "./lib/module/index.js"
     },
@@ -47,13 +48,15 @@
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__",
-    "!**/.*"
+    "!**/.*",
+    "web_assets",
+    "scripts/copy-web-assets.mjs"
   ],
   "scripts": {
     "example": "yarn workspace @nosmai/react-native-effects-sdk-example",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "build:plugin": "tsc -p plugin/tsconfig.json",
-    "prepare": "bob build && yarn build:plugin",
+    "prepare": "yarn build:web && bob build && yarn build:plugin",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "test": "jest --runInBand --no-watchman",
@@ -61,7 +64,9 @@
     "test:native:failure": "bash scripts/test-native-recording-failures.sh",
     "check": "yarn lint && yarn typecheck && yarn test && yarn test:native:failure && yarn prepare && yarn test:expo:plugin",
     "package:check": "node scripts/check-package.mjs",
-    "prepack": "yarn check && yarn package:check"
+    "prepack": "yarn check && yarn package:check",
+    "build:web": "node web_sdk_bridge/build.mjs",
+    "copy:web-assets": "node scripts/copy-web-assets.mjs public"
   },
   "keywords": [
     "react-native",
@@ -70,7 +75,11 @@
     "effects",
     "ar",
     "ios",
-    "android"
+    "android",
+    "web",
+    "react-native-web",
+    "webgl",
+    "wasm"
   ],
   "repository": {
     "type": "git",
@@ -89,12 +98,16 @@
     "@eslint/compat": "^2.1.0",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.4",
+    "@nosmai/web-sdk": "0.1.0-alpha.2",
     "@react-native/babel-preset": "0.81.5",
     "@react-native/eslint-config": "0.81.5",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.0",
     "@types/react": "^19.1.0",
+    "@types/react-dom": "^19",
+    "@types/react-native-web": "^0",
     "del-cli": "^7.0.0",
+    "esbuild": "^0.25.12",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
@@ -110,10 +123,14 @@
   "peerDependencies": {
     "expo": ">=54.0.0 <55.0.0",
     "react": ">=19.1.0 <20",
-    "react-native": ">=0.81.5 <0.82.0"
+    "react-native": ">=0.81.5 <0.82.0",
+    "react-native-web": ">=0.21.0"
   },
   "peerDependenciesMeta": {
     "expo": {
+      "optional": true
+    },
+    "react-native-web": {
       "optional": true
     }
   },
@@ -166,5 +183,9 @@
     "tabWidth": 2,
     "trailingComma": "es5",
     "useTabs": false
+  },
+  "browser": "./lib/module/index.web.js",
+  "bin": {
+    "nosmai-copy-web-assets": "./scripts/copy-web-assets.mjs"
   }
 }

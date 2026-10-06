@@ -88,7 +88,7 @@ export interface NosmaiCloudFilterPage {
 
 export interface NosmaiCloudDownloadResult {
   filterId: string;
-  /** Absolute local package path accepted by `applyEffect`. */
+  /** Platform-specific package source accepted by `applyEffect` (local path on native, Blob URL on Web). */
   path: string;
   alreadyDownloaded: boolean;
 }
@@ -236,12 +236,12 @@ export interface NosmaiPhotoResult {
   mimeType: 'image/jpeg';
 }
 
-/** A finalized processed MP4 written to the application's temporary storage. */
+/** A finalized processed recording. Native returns MP4; Web may return WebM. */
 export interface NosmaiRecordingResult {
   uri: string;
   durationSeconds: number;
   fileSizeBytes: number;
-  mimeType: 'video/mp4';
+  mimeType: string;
   hasAudio: boolean;
 }
 
@@ -294,7 +294,7 @@ export interface NosmaiFrameStreamOptions {
 }
 
 export interface NosmaiCameraReadyEvent {
-  platform: 'android' | 'ios';
+  platform: 'android' | 'ios' | 'web';
 }
 
 /** A tap resolved inside the visible camera preview. */
