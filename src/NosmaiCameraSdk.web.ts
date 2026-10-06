@@ -1,4 +1,4 @@
-import { NosmaiErrorCode, NosmaiSdkError } from './errors';
+﻿import { NosmaiErrorCode, NosmaiSdkError } from './errors';
 import { webRuntime, normalizeWebEffect, notImplemented } from './web/NosmaiWebRuntime';
 import type {
   NosmaiCameraApi,
@@ -294,7 +294,14 @@ export const NosmaiCameraSdk: NosmaiCameraApi = {
   async applyEffect(packagePath) {
     const source = requireName(packagePath, 'packagePath');
     const instance = webRuntime.getSdk();
-    await instance.effects.apply(source);
+    const cloudFilterId = webRuntime.cloudFilterIdForPath(source);
+
+    if (cloudFilterId) {
+      await webRuntime.applyCloudFilter(cloudFilterId);
+    } else {
+      await instance.effects.apply(source);
+    }
+
     webRuntime.setCurrentEffect(
       source,
       normalizeWebEffect(instance.effects.active, source)
@@ -305,7 +312,14 @@ export const NosmaiCameraSdk: NosmaiCameraApi = {
   async applyFilter(packagePath) {
     const source = requireName(packagePath, 'packagePath');
     const instance = webRuntime.getSdk();
-    await instance.effects.apply(source);
+    const cloudFilterId = webRuntime.cloudFilterIdForPath(source);
+
+    if (cloudFilterId) {
+      await webRuntime.applyCloudFilter(cloudFilterId);
+    } else {
+      await instance.effects.apply(source);
+    }
+
     webRuntime.setCurrentEffect(
       source,
       normalizeWebEffect(instance.effects.active, source)

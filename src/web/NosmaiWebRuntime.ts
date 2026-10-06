@@ -1,4 +1,4 @@
-import { NosmaiErrorCode, NosmaiSdkError } from '../errors';
+﻿import { NosmaiErrorCode, NosmaiSdkError } from '../errors';
 import type {
   CameraConfiguration,
   CameraPosition,
@@ -76,11 +76,15 @@ let backgroundActive = false;
 let currentEffectSource: string | undefined;
 let currentEffectInfo: NosmaiFilter | undefined;
 let licenceStatus: LicenseStatus = 'unverified';
+type WebMirrorMode = 'auto' | 'on' | 'off';
+
+let mirrorMode: WebMirrorMode = 'auto';
 
 let onViewReady: (() => void) | undefined;
 let onViewError: ((error: NosmaiNativeError) => void) | undefined;
 
 const cloudObjectUrls = new Map<string, string>();
+const cloudFilterIdsByPath = new Map<string, string>();
 const generatedObjectUrls = new Set<string>();
 
 function emit<K extends ListenerKey>(
@@ -591,17 +595,30 @@ export const webRuntime = {
   setCameraConfiguration(configuration: CameraConfiguration) {
     cameraPosition = configuration.position;
   },
+setMirrorMode(mode: WebMirrorMode) {
+  mirrorMode = mode;
 
+  if (sdk) {
+    sdk.camera.setMirror(mode);
+  }
+},
   async startProcessing(): Promise<void> {
-    try {
-      processingRequested = true;
-      paused = false;
-      await ensureCanvasAttached();
-      const instance = requireSdk();
-      if (!instance.camera.isRunning) {
-        await startBrowserCamera(instance);
-      }
-    } catch (error) {
+  try {
+    processingRequested = true;
+    paused = false;
+
+    await ensureCanvasAttached();
+
+    const instance = requireSdk();
+
+    if (!instance.camera.isRunning) {
+      await startBrowserCamera(instance);
+    }
+
+    // Apply mirror after camera has started.
+    instance.camera.setMirror(mirrorMode);
+
+  } catch (error) {
       processingRequested = false;
       throw report(error);
     }
@@ -613,8 +630,6 @@ export const webRuntime = {
       paused = false;
       const instance = requireSdk();
       if (instance.camera.isRunning) instance.camera.stop();
-      stopFallbackCameraStream();
-      stopFallbackCameraStream();
       stopFallbackCameraStream();
     } catch (error) {
       throw report(error);
@@ -700,6 +715,7 @@ export const webRuntime = {
       for (const url of generatedObjectUrls) browserUrl()?.revokeObjectURL?.(url);
       generatedObjectUrls.clear();
       cloudObjectUrls.clear();
+      cloudFilterIdsByPath.clear();
     }
   },
 
@@ -879,6 +895,7 @@ export const webRuntime = {
     const blob = new BlobCtor([bytes], { type: 'application/octet-stream' });
     const path = urlApi.createObjectURL(blob);
     cloudObjectUrls.set(filterId, path);
+    cloudFilterIdsByPath.set(path, filterId);
     generatedObjectUrls.add(path);
 
     return {
@@ -897,9 +914,23 @@ export const webRuntime = {
     if (url) {
       browserUrl()?.revokeObjectURL?.(url);
       cloudObjectUrls.delete(filterId);
+      cloudFilterIdsByPath.delete(url);
       generatedObjectUrls.delete(url);
     }
     return true;
+  },
+
+  cloudFilterIdForPath(path: string): string | undefined {
+    return cloudFilterIdsByPath.get(path);
+  },
+
+  async applyCloudFilter(filterId: string): Promise<void> {
+    const instance = requireSdk();
+
+    await instance.cloud.apply(
+      filterId,
+      (progress: number) => webRuntime.emitDownload(filterId, progress)
+    );
   },
 
   createObjectUrl(blob: WebBlob): string {

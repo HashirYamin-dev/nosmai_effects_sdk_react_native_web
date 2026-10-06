@@ -11,6 +11,9 @@ import { NosmaiSdkError } from './errors';
 import type { NosmaiCameraViewProps, NosmaiGameTapDetails } from './types';
 import { webRuntime } from './web/NosmaiWebRuntime';
 
+const WEB_CANVAS_WIDTH = 720;
+const WEB_CANVAS_HEIGHT = 1280;
+
 export function NosmaiCameraView({
   style,
   onLayout,
@@ -25,53 +28,65 @@ export function NosmaiCameraView({
   const canvasRef = useRef<any>(null);
   const previewSize = useRef({ width: 0, height: 0 });
 
+  // Keep consumer callbacks fresh without unregistering/re-registering the
+  // WebGL canvas every time the parent React component re-renders.
+  const onReadyRef = useRef(onReady);
+  const onErrorRef = useRef(onError);
+
+  onReadyRef.current = onReady;
+  onErrorRef.current = onError;
+
+  // IMPORTANT:
+  // Attach this canvas only once for its mount lifecycle.
+  // Re-attaching Nosmai's WebGL engine on every parent state update can reset
+  // the rendering pipeline and make beauty/cloud effects appear inactive.
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     return webRuntime.registerCanvas(canvas, {
-      onReady: () => onReady?.({ platform: 'web' }),
-      onError,
+      onReady: () => onReadyRef.current?.({ platform: 'web' }),
+      onError: (error) => onErrorRef.current?.(error),
     });
-  }, [onError, onReady]);
+  }, []);
 
   useEffect(() => {
-    void NosmaiCameraSdk.configureCamera({ position: cameraPosition }).catch(
-      (error) => {
-        const sdkError = NosmaiSdkError.fromUnknown(error);
-        onError?.({
-          code: sdkError.code,
-          message: sdkError.message,
-          details: sdkError.details,
-        });
-      }
-    );
-  }, [cameraPosition, onError]);
+    void NosmaiCameraSdk.configureCamera({
+      position: cameraPosition,
+    }).catch((error) => {
+      const sdkError = NosmaiSdkError.fromUnknown(error);
 
+      onErrorRef.current?.({
+        code: sdkError.code,
+        message: sdkError.message,
+        details: sdkError.details,
+      });
+    });
+  }, [cameraPosition]);
+useEffect(() => {
+  webRuntime.setMirrorMode(
+    mirror === undefined
+      ? 'auto'
+      : mirror
+        ? 'on'
+        : 'off'
+  );
+}, [mirror]);
   const handleLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
     previewSize.current = { width, height };
 
-    const canvas = canvasRef.current;
-    if (canvas && width > 0 && height > 0) {
-      const browserWindow = (globalThis as any).window;
-      const ratio = browserWindow
-        ? Math.min(Number(browserWindow.devicePixelRatio) || 1, 2)
-        : 1;
-
-      const pixelWidth = Math.max(1, Math.round(width * ratio));
-      const pixelHeight = Math.max(1, Math.round(height * ratio));
-
-      if (canvas.width !== pixelWidth) canvas.width = pixelWidth;
-      if (canvas.height !== pixelHeight) canvas.height = pixelHeight;
-    }
-
+    // Do NOT change canvas.width / canvas.height after Nosmai has attached.
+    // Setting either intrinsic canvas dimension resets the WebGL drawing
+    // buffer/context state. The raw Web SDK baseline works with a stable
+    // 720x1280 drawing buffer, so keep that stable for the full session.
     onLayout?.(event);
   };
 
   const reportTapError = (error: unknown) => {
     const sdkError = NosmaiSdkError.fromUnknown(error);
-    onError?.({
+
+    onErrorRef.current?.({
       code: sdkError.code,
       message: sdkError.message,
       details: sdkError.details,
@@ -80,12 +95,16 @@ export function NosmaiCameraView({
 
   const handleGameTap = async (event: GestureResponderEvent) => {
     const { width, height } = previewSize.current;
-    if (width <= 0 || height <= 0) return;
+
+    if (width <= 0 || height <= 0) {
+      return;
+    }
 
     const locationX = Math.min(
       Math.max(event.nativeEvent.locationX, 0),
       width
     );
+
     const locationY = Math.min(
       Math.max(event.nativeEvent.locationY, 0),
       height
@@ -107,14 +126,16 @@ export function NosmaiCameraView({
       }
 
       if (await NosmaiCameraSdk.isGameReady()) {
-        await NosmaiCameraSdk.sendGameTap(tap.normalizedX, tap.normalizedY);
+        await NosmaiCameraSdk.sendGameTap(
+          tap.normalizedX,
+          tap.normalizedY
+        );
       }
     } catch (error) {
       reportTapError(error);
     }
   };
 
-  const shouldMirror = mirror ?? cameraPosition === 'front';
 
   return (
     <View
@@ -125,6 +146,8 @@ export function NosmaiCameraView({
     >
       <canvas
         ref={canvasRef}
+        width={WEB_CANVAS_WIDTH}
+        height={WEB_CANVAS_HEIGHT}
         aria-hidden="true"
         style={{
           position: 'absolute',
@@ -134,9 +157,10 @@ export function NosmaiCameraView({
           display: 'block',
           objectFit: 'cover',
           pointerEvents: 'none',
-          transform: shouldMirror ? 'scaleX(-1)' : undefined,
+
         }}
       />
+
       {enableGameTapHandling ? (
         <Pressable
           accessible={false}
